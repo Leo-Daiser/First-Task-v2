@@ -1,18 +1,32 @@
-
+// pages/index.js
 import React from 'react';
-import Layout from '../components/Layout';
+import { useRouter } from 'next/router';
 
 const Home = () => {
+  const router = useRouter();
+
+  const navigateToSuppliers = () => {
+    router.push('/suppliers');
+  };
+
+  const navigateToMaterials = () => {
+    router.push('/materials');
+  };
+
   return (
     <div className="container">
       <h1 className="title">База данных поставщиков</h1>
-      
+
       <div className="columns">
         <div className="column">
-          <a href="/suppliers" className="button is-primary">Поставщики</a>
+          <button className="button is-primary" onClick={navigateToSuppliers}>
+            Поставщики
+          </button>
         </div>
         <div className="column">
-          <a href="/materials" className="button is-info">Виды материалов</a>
+          <button className="button is-info" onClick={navigateToMaterials}>
+            Виды материалов
+          </button>
         </div>
       </div>
     </div>

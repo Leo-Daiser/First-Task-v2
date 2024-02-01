@@ -1,18 +1,29 @@
+// pages/materials.js
+import React, { useState, useEffect } from 'react';
+import { getAllMaterials } from '../backend/api';
 
-import { fetchMaterials } from '../lib/db';
-import Layout from '../components/Layout';
+const MaterialsPage = () => {
+  const [materials, setMaterials] = useState([]);
+  const [error, setError] = useState(null);
 
-export async function getStaticProps() {
-  const materials = await fetchMaterials();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllMaterials();
+        setMaterials(data);
+      } catch (error) {
+        console.error('Error fetching materials:', error);
+        setError(error);
+      }
+    };
 
-  return {
-    props: {
-      materials,
-    },
-  };
-}
+    fetchData();
+  }, []);
 
-const MaterialsPage = ({ materials }) => {
+  if (error) {
+    return <div>Error fetching materials: {error.message}</div>;
+  }
+
   return (
     <div>
       <h1>Materials</h1>

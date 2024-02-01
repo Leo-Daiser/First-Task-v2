@@ -1,23 +1,30 @@
+// pages/suppliers.js
 
-import { fetchSuppliersWithMaterials } from '../lib/db';
-import styles from '../styles/Suppliers.module.css';
-import Layout from '../components/Layout';
+import { fetchSuppliers } from '../lib/db';
 
-export async function getStaticProps() {
-  const suppliers = await fetchSuppliersWithMaterials();
-
-  return {
-    props: {
-      suppliers,
-    },
-  };
-}
+export const getServerSideProps = async () => {
+  try {
+    const suppliers = await fetchSuppliers();
+    return {
+      props: {
+        suppliers,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching suppliers:', error);
+    return {
+      props: {
+        suppliers: [],
+      },
+    };
+  }
+};
 
 const SuppliersPage = ({ suppliers }) => {
   return (
     <div>
       <h1>Suppliers</h1>
-      <table className={styles.suppliersTable}>
+      <table>
         <thead>
           <tr>
             <th>ID</th>
